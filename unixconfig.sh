@@ -12,7 +12,10 @@ unset filepath
 filepath=(/.bashrc
 /.vimrc
 /.zshrc
-)
+/.zshrc.pre-oh-my-zsh
+/.myzshrc
+/.gvimrc)
+
 filelenth=${#filepath[*]}
 echo -e "$filelenth  files will be copied from \033[32m$HOME/\033[0m to current dir:\
 \033[31m`pwd`/\033[0m\
