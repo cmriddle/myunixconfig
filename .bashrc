@@ -1,6 +1,25 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
+function find_git_branch {
+    local dir=. head
+    until [ "$dir" -ef / ]; do
+        if [ -f "$dir/.git/HEAD" ]; then
+            head=$(< "$dir/.git/HEAD")
+            if [[ $head == ref:\ refs/heads/* ]]; then
+                git_branch=" ${head#*/*/}"
+            elif [[ $head != '' ]]; then
+                git_branch=' (detached)'
+            else
+                git_branch=' (unknown)'
+            fi
+            return
+        fi
+        dir="../$dir"
+    done
+    git_branch=''
+}
+PROMPT_COMMAND="find_git_branch; $PROMPT_COMMAND"
 
 # If not running interactively, don't do anything
 case $- in
@@ -123,7 +142,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-export PS1='\[\e]2;\u@\h:\w\a\]\[\e[32m\][\A]\[\e[34m\]\u\[\e[31m\][\w]\[\e[33m\]$:\[\e[0m\]'
+export PS1='\[\e]2;\u@\h:\w\a\]\[\e[32m\][\A]\[\e[34m\]\u\[\e[31m\][\w]\[\e[33m\]>$git_branch $:\[\e[0m\]'
 
 
 # Set colors for man pages
