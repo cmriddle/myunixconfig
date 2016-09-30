@@ -53,10 +53,9 @@ shopt -s checkwinsize
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
+#set a fancy prompt (no-color, unless we know we "want" color)
+case "$TERM" in   
+   xterm-color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -119,6 +118,13 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -='cd -'
+alias pycharm="pycharm.sh"
+alias webstorm="webstorm.sh"
+alias docear="docear.sh"
+alias zotero="run-zotero.sh"
+alias fiji="ImageJ-linux64"
+
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
@@ -159,12 +165,15 @@ man() {
 }
 
 #openmpi
-export PATH=/home/zhaowei/emsoftwares:$PATH
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/zhaowei/emsoftwares/openmpi/lib
+export PATH=$HOME/opt/openmpi/bin:$PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/opt/openmpi/lib
 
+#relion 1.4
+export PATH=$PATH:$HOME/opt/relion-1.4/
+alias relion='maingui'
 
-LD_LIBRARY_PATH=dir : $LD_LIBRARY_PATH
-export LD_LIBRARY_PATH
+#Chimera
+export PATH=$PATH:$HOME/.local/UCSF-Chimera64-1.11/bin
 
 #pytom
 export PATH=$PATH:/home/zhaowei/emsoftwares/pytom/bin
@@ -172,7 +181,32 @@ export PATH=$PATH:/home/zhaowei/emsoftwares/pytom/frontend
 
 alias pytompage='pytom pytomServer.py -h "ubuntu"'
 
+#Pycharm and webstorm
+export PATH=$PATH:/usr/local/pycharm-2016.2.1/bin
+export PATH=$PATH:/usr/local/WebStorm-162.1447.27/bin
+
+#zotero
+export PATH=$PATH:/usr/local/Zotero_linux-x86_64
+
+#Fiji imageJ
+export PATH=$PATH:/usr/local/Fiji.app
+
+#docear
+export PATH=$PATH:/usr/local/docear-1.2.0.0_stable_build291
 
 #ICON
 export PATH=/home/zhaowei/emsoftwares/Ubuntu64/bin:$PATH
 export GOPATH=/home/zhaowei/mygo
+
+#IMOD
+source /usr/local/Particle/Particle.sh
+export IMOD_PROCESSORS=4
+#xmipp
+source ~/opt/xmipp/.xmipp.bashrc
+test -s ~/Xmipp_dir/.xmipp.bashrc && . ~/Xmipp_dir/.xmipp.bashrc || true
+
+
+# added by Anaconda3 4.1.1 installer
+export PATH="/home/weizhao/opt/anaconda3/bin:$PATH"
+
+
